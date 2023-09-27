@@ -2,7 +2,7 @@ import { Router } from "express";
 
 const routes = Router();
 
-const values = [...Array(6400)].map(() => ({ value: Math.floor(Math.random() * 100) }));
+const values = [...Array(6400)].map(() => ({ value: Math.floor(Math.random() * 100000) }));
 
 routes.get("/values", async (req, res) => {
   const perPage = Number.parseInt(req.query.perPage, 10) || 50;
