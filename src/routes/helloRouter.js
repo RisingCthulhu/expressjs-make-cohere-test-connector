@@ -24,7 +24,7 @@ routes.get("/greet", async (req, res) => {
   if (Date.now() - prevRequestTimestamp < 10000) {
     res.status(429).send({
       error: 'Rate limit exceeded.'
-    }
+    });
   }
   
   res.status(200).send({
