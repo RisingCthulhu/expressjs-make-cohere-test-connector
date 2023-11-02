@@ -25,6 +25,7 @@ routes.get("/greet", async (req, res) => {
     res.status(429).send({
       error: 'Rate limit exceeded.'
     });
+    return;
   }
   
   res.status(200).send({
