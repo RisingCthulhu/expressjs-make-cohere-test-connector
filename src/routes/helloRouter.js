@@ -3,8 +3,16 @@ import { Router } from "express";
 const routes = Router();
 
 const values = [...Array(6400)].map(() => ({ value: Math.floor(Math.random() * 100000) }));
+let prevRequestTimestamp;
 
 routes.get("/values", async (req, res) => {
+  if (Date.now() - prevRequestTimestamp < 10000) {
+    res.status(429).send({
+      error: 'Rate limit exceeded.'
+    });
+    return;
+  }
+  
   const perPage = Number.parseInt(req.query.perPage, 10) || 50;
   const page = Number.parseInt(req.query.cursor, 10) || 1;
   const currentPageValues = values.slice(perPage * (page - 1), perPage * page);
@@ -15,12 +23,11 @@ routes.get("/values", async (req, res) => {
     values: values.slice(perPage * (page - 1), perPage * page),
     cursor: nextPageValues.length !== 0 ? (page + 1).toString(10) : undefined
   });
+  prevRequestTimestamp = Date.now();
 });
 
-let prevRequestTimestamp;
 
 routes.get("/greet", async (req, res) => {
-
   if (Date.now() - prevRequestTimestamp < 10000) {
     res.status(429).send({
       error: 'Rate limit exceeded.'
