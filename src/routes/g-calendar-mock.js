@@ -80,7 +80,7 @@ const fromGmailEvent = {
 
 routes.get('/calendars/:calendarId/events/:eventId', (req, res) => {
     const event =
-        req.path.eventId === 'fromGmailEvent' ? fromGmailEvent : defaultEvent;
+        req.params.eventId === 'fromGmailEvent' ? fromGmailEvent : defaultEvent;
 
     res.send(event);
 });
