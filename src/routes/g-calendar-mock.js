@@ -11,7 +11,7 @@ const defaultEvent = {
 const fromGmailEvent = {
 	id: '123123123',
 	attendees: [ { displayName: 'Make User', email: 'development@make.com' } ],
-	eventType: 'default'
+	eventType: 'fromGmail'
 }
 
 routes.get('/calendars/:calendarId/defaultEvents/:eventId', (req, res) => {
