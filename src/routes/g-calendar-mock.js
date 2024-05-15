@@ -84,7 +84,7 @@ const fromGmailEvent = [
 
 routes.get('/calendars/:calendarId/events/:eventId', (req, res) => {
     const event =
-        req.path.eventId === 'defaultEvent' ? defaultEvent : fromGmailEvent;
+        req.path.eventId === 'fromGmailEvent' ? fromGmailEvent : defaultEvent;
 
     res.send(event);
 });
@@ -94,7 +94,7 @@ routes.get('/calendars/:calendarId/events/:eventId', (req, res) => {
 
 routes.patch('/calendars/:calendarId/events/:eventId', (req, res) => {
     const event =
-        req.params.eventId === 'defaultEvent' ? defaultEvent : fromGmailEvent;
+        req.params.eventId === 'fromGmailEvent' ? fromGmailEvent : defaultEvent;
 
     const propsToUpdate = {
         colorId: req.colorId || event.colorId,
