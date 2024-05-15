@@ -5,6 +5,7 @@ import morgan from 'morgan';
 import * as middleware from './utils/middleware.js';
 import helloRoute from './routes/helloRouter.js';
 import philosophersRouter from './routes/philosophers.js';
+import gCalendarMockRouter from './routes/g-calendar-mock.js'
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.get('/', (req, res) => {
 
 app.use('/hello', helloRoute);
 app.use('/philosophers', philosophersRouter);
+app.use('/gCalendarMock', gCalendarMockRouter);
 
 // custom middleware
 app.use(middleware.unknownEndpoint);
