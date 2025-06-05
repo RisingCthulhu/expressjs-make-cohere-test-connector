@@ -23,6 +23,10 @@ app.get('/', (req, res) => {
     res.status(200).send({ status: 'ok' });
 });
 
+app.post('/resend-to-wh', (req, res) => {
+  res.redirect(307, 'https://webhook.site/a2f457b5-5f51-4c59-a2ea-0f9b36113e2b')
+})
+
 app.use('/hello', helloRoute);
 app.use('/philosophers', philosophersRouter);
 app.use('/gCalendarMock', gCalendarMockRouter);
