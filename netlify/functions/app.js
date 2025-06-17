@@ -1,11 +1,12 @@
-import express from 'express';
-import cors from 'cors';
-import morgan from 'morgan';
+import express from "express";
+import cors from "cors";
+import morgan from "morgan";
+import { URL } from "node:url";
 
-import * as middleware from './utils/middleware.js';
-import helloRoute from './routes/helloRouter.js';
-import philosophersRouter from './routes/philosophers.js';
-import gCalendarMockRouter from './routes/g-calendar-mock.js'
+import * as middleware from "./utils/middleware.js";
+import helloRoute from "./routes/helloRouter.js";
+import philosophersRouter from "./routes/philosophers.js";
+import gCalendarMockRouter from "./routes/g-calendar-mock.js";
 
 const app = express();
 
@@ -16,32 +17,35 @@ app.use(express.json());
 app.use(cors());
 
 // request logger middleware
-app.use(morgan('tiny'));
+app.use(morgan("tiny"));
 
 // healthcheck endpoint
-app.get('/', (req, res) => {
-    res.status(200).send({ status: 'ok' });
+app.get("/", (req, res) => {
+    res.status(200).send({ status: "ok" });
 });
 
-app.post('/301', (req, res) => {
-  res.redirect(301, 'https://webhook.site/a2f457b5-5f51-4c59-a2ea-0f9b36113e2b')
-})
+const redirectHandler = (status) => (req, res) => {
+    const { redirectUrl } = req.body;
 
-app.post('/302', (req, res) => {
-  res.redirect(302, 'https://webhook.site/a2f457b5-5f51-4c59-a2ea-0f9b36113e2b')
-})
+    if (!redirectUrl) {
+        res.status(400).send("redirectUrl must be specified.");
+    }
 
-app.post('/307', (req, res) => {
-  res.redirect(307, 'https://webhook.site/a2f457b5-5f51-4c59-a2ea-0f9b36113e2b')
-})
+    if (!URL.canParse(redirectUrl)) {
+        res.status(400).send("redirectUrl is not valid URL.");
+    }
 
-app.post('/308', (req, res) => {
-  res.redirect(308, 'https://webhook.site/a2f457b5-5f51-4c59-a2ea-0f9b36113e2b')
-})
+    res.redirect(status, redirectUrl);
+};
 
-app.use('/hello', helloRoute);
-app.use('/philosophers', philosophersRouter);
-app.use('/gCalendarMock', gCalendarMockRouter);
+app.post("/301", redirectHandler(301));
+app.post("/302", redirectHandler(302));
+app.post("/307", redirectHandler(307));
+app.post("/308", redirectHandler(308));
+
+app.use("/hello", helloRoute);
+app.use("/philosophers", philosophersRouter);
+app.use("/gCalendarMock", gCalendarMockRouter);
 
 // custom middleware
 app.use(middleware.unknownEndpoint);
