@@ -43,6 +43,15 @@ app.post("/302", redirectHandler(302));
 app.post("/307", redirectHandler(307));
 app.post("/308", redirectHandler(308));
 
+const fakeRedirectHandler = (status) => (req, res) => {
+    res.status(status).send('Fake redirect.');
+};
+
+app.post("/301-fake", fakeRedirectHandler(301));
+app.post("/302-fake", fakeRedirectHandler(302));
+app.post("/307-fake", fakeRedirectHandler(307));
+app.post("/308-fake", fakeRedirectHandler(308));
+
 app.use("/hello", helloRoute);
 app.use("/philosophers", philosophersRouter);
 app.use("/gCalendarMock", gCalendarMockRouter);
