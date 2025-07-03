@@ -10,6 +10,10 @@ import gCalendarMockRouter from "./routes/g-calendar-mock.js";
 
 const app = express();
 
+// custom middleware
+app.use(middleware.unknownEndpoint);
+app.use(middleware.errorHandler);
+
 // parse json request body
 app.use(express.json());
 
@@ -68,9 +72,5 @@ app.get("/iso-8859-1-charset-latin1", (req, res) => {
 app.use("/hello", helloRoute);
 app.use("/philosophers", philosophersRouter);
 app.use("/gCalendarMock", gCalendarMockRouter);
-
-// custom middleware
-app.use(middleware.unknownEndpoint);
-app.use(middleware.errorHandler);
 
 export default app;
