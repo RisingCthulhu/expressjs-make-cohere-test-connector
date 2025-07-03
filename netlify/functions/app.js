@@ -53,14 +53,14 @@ app.post("/307-fake", fakeRedirectHandler(307));
 app.post("/308-fake", fakeRedirectHandler(308));
 
 app.get("/iso-8859-1-charset-utf8", (req, res) => {
-    res.set("Content-Type", "application/json; charset=utf-8");
+    // res.set("Content-Type", "application/json; charset=utf-8");
     res.send({
         charset: `!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_\`abcdefghijklmnopqrstuvwxyz{|}~€‚ƒ„…†‡ˆ‰Š‹ŒŽ‘’“”•–—˜™š›œžŸ ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ`,
     });
 });
 app.get("/iso-8859-1-charset-latin1", (req, res) => {
-    // res.set("Content-Type", "application/json; charset=");
-    res.charset = 'iso-8859-1'
+    res.set("Content-Type", "application/json;charset=iso-8859-1");
+    // res.charset = 'iso-8859-1'
     res.send({
         charset: `!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_\`abcdefghijklmnopqrstuvwxyz{|}~€‚ƒ„…†‡ˆ‰Š‹ŒŽ‘’“”•–—˜™š›œžŸ ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ`,
     });
