@@ -52,7 +52,7 @@ app.post("/302-fake", fakeRedirectHandler(302));
 app.post("/307-fake", fakeRedirectHandler(307));
 app.post("/308-fake", fakeRedirectHandler(308));
 
-app.get('iso-8859-1-charset', (req, res) => {
+app.get('/iso-8859-1-charset', (req, res) => {
     res.send({ charset: `!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_\`abcdefghijklmnopqrstuvwxyz{|}~€‚ƒ„…†‡ˆ‰Š‹ŒŽ‘’“”•–—˜™š›œžŸ ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ` })
 })
 
