@@ -44,7 +44,7 @@ app.post("/307", redirectHandler(307));
 app.post("/308", redirectHandler(308));
 
 const fakeRedirectHandler = (status) => (req, res) => {
-    res.status(status).send('Fake redirect.');
+    res.status(status).send("Fake redirect.");
 };
 
 app.post("/301-fake", fakeRedirectHandler(301));
@@ -52,12 +52,18 @@ app.post("/302-fake", fakeRedirectHandler(302));
 app.post("/307-fake", fakeRedirectHandler(307));
 app.post("/308-fake", fakeRedirectHandler(308));
 
-app.get('/iso-8859-1-charset-utf8', (req, res) => {
-    res.set('content-type', 'application/json; charset=utf-8').send({ charset: `!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_\`abcdefghijklmnopqrstuvwxyz{|}~€‚ƒ„…†‡ˆ‰Š‹ŒŽ‘’“”•–—˜™š›œžŸ ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ` })
-})
-app.get('/iso-8859-1-charset-latin1', (req, res) => {
-    res.set('content-type', 'application/json; charset=iso-8859-1').send({ charset: `!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_\`abcdefghijklmnopqrstuvwxyz{|}~€‚ƒ„…†‡ˆ‰Š‹ŒŽ‘’“”•–—˜™š›œžŸ ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ` })
-})
+app.get("/iso-8859-1-charset-utf8", (req, res) => {
+    res.setHeader("content-type", "application/json; charset=utf-8");
+    res.send({
+        charset: `!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_\`abcdefghijklmnopqrstuvwxyz{|}~€‚ƒ„…†‡ˆ‰Š‹ŒŽ‘’“”•–—˜™š›œžŸ ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ`,
+    });
+});
+app.get("/iso-8859-1-charset-latin1", (req, res) => {
+    res.setHeader("content-type", "application/json; charset=iso-8859-1");
+    res.send({
+        charset: `!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_\`abcdefghijklmnopqrstuvwxyz{|}~€‚ƒ„…†‡ˆ‰Š‹ŒŽ‘’“”•–—˜™š›œžŸ ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ`,
+    });
+});
 
 app.use("/hello", helloRoute);
 app.use("/philosophers", philosophersRouter);
