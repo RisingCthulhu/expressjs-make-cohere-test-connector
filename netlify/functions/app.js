@@ -10,10 +10,6 @@ import gCalendarMockRouter from "./routes/g-calendar-mock.js";
 
 const app = express();
 
-// custom middleware
-app.use(middleware.unknownEndpoint);
-app.use(middleware.errorHandler);
-
 // parse json request body
 app.use(express.json());
 
@@ -22,6 +18,10 @@ app.use(cors());
 
 // request logger middleware
 app.use(morgan("tiny"));
+
+// custom middleware
+app.use(middleware.unknownEndpoint);
+app.use(middleware.errorHandler);
 
 // healthcheck endpoint
 app.get("/", (req, res) => {
