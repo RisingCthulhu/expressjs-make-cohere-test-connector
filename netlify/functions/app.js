@@ -71,7 +71,7 @@ app.use("/philosophers", philosophersRouter);
 app.use("/gCalendarMock", gCalendarMockRouter);
 
 // custom middleware
-app.use(middleware.unknownEndpoint);
-app.use(middleware.errorHandler);
+// app.use(middleware.unknownEndpoint);
+// app.use(middleware.errorHandler);
 
 export default app;
