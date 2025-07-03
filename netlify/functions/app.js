@@ -19,10 +19,6 @@ app.use(cors());
 // request logger middleware
 app.use(morgan("tiny"));
 
-// custom middleware
-app.use(middleware.unknownEndpoint);
-app.use(middleware.errorHandler);
-
 // healthcheck endpoint
 app.get("/", (req, res) => {
     res.status(200).send({ status: "ok" });
@@ -57,13 +53,13 @@ app.post("/307-fake", fakeRedirectHandler(307));
 app.post("/308-fake", fakeRedirectHandler(308));
 
 app.get("/iso-8859-1-charset-utf8", (req, res) => {
-    res.setHeader("Content-Type", "application/json; charset=utf-8");
+    res.set("Content-Type", "application/json; charset=utf-8");
     res.send({
         charset: `!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_\`abcdefghijklmnopqrstuvwxyz{|}~€‚ƒ„…†‡ˆ‰Š‹ŒŽ‘’“”•–—˜™š›œžŸ ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ`,
     });
 });
 app.get("/iso-8859-1-charset-latin1", (req, res) => {
-    res.setHeader("Content-Type", "application/json; charset=iso-8859-1");
+    res.set("Content-Type", "application/json; charset=iso-8859-1");
     res.send({
         charset: `!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_\`abcdefghijklmnopqrstuvwxyz{|}~€‚ƒ„…†‡ˆ‰Š‹ŒŽ‘’“”•–—˜™š›œžŸ ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ`,
     });
@@ -72,5 +68,9 @@ app.get("/iso-8859-1-charset-latin1", (req, res) => {
 app.use("/hello", helloRoute);
 app.use("/philosophers", philosophersRouter);
 app.use("/gCalendarMock", gCalendarMockRouter);
+
+// custom middleware
+app.use(middleware.unknownEndpoint);
+app.use(middleware.errorHandler);
 
 export default app;
