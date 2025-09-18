@@ -71,8 +71,9 @@ app.get('/iso-8859-1-charset-latin1', (req, res) => {
 app.get('/strict-validate-qs', (req, res) => {
 	const { bestAutomationPlatform, bestEngineeringTeam, ...rest } = req.params;
 
-	if (rest.length !== 0) {
-		const unexpectedQsStr = Object.keys(rest).join(', ')
+	const restKeys = Object.keys(rest);
+	if (restKeys.length !== 0) {
+		const unexpectedQsStr = restKeys.join(', ')
 		
 		res.status(400).send({ error: 'Unexpected query parameters', message: `Received unexpected query parameters: ${unexpectedQsStr}.` })
 	}
