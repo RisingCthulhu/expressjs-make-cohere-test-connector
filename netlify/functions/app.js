@@ -69,7 +69,7 @@ app.get('/iso-8859-1-charset-latin1', (req, res) => {
 });
 
 app.get('/strict-validate-qs', (req, res) => {
-	const { bestAutomationPlatform, bestEngineeringTeam, ...rest } = req.params;
+	const { bestAutomationPlatform, bestEngineeringTeam, ...rest } = req.query;
 
 	const restKeys = Object.keys(rest);
 	if (restKeys.length !== 0) {
