@@ -38,12 +38,10 @@ const redirectHandler = (status) => (req, res) => {
 	res.redirect(status, redirectUrl);
 };
 
-app.post('/301', redirectHandler(301));
-app.post('/302', redirectHandler(302));
-app.post('/307', redirectHandler(307));
-app.post('/308', redirectHandler(308));
-app.get('/307', redirectHandler(307));
-app.get('/308', redirectHandler(308));
+app.all('/301', redirectHandler(301));
+app.all('/302', redirectHandler(302));
+app.all('/307', redirectHandler(307));
+app.all('/308', redirectHandler(308));
 
 const fakeRedirectHandler = (status) => (req, res) => {
 	res.status(status).send('Fake redirect.');
