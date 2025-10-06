@@ -38,10 +38,9 @@ const redirectHandler = (status) => (req, res) => {
 	res.redirect(status, redirectUrl);
 };
 
-app.all('/301', redirectHandler(301));
-app.all('/302', redirectHandler(302));
-app.all('/307', redirectHandler(307));
-app.all('/308', redirectHandler(308));
+for (let code = 300; code <= 308; code++) {
+	app.all(`/${code}`, redirectHandler(code));
+}
 
 const fakeRedirectHandler = (status) => (req, res) => {
 	res.status(status).send('Fake redirect.');
