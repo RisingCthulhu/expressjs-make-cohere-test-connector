@@ -51,6 +51,11 @@ app.post('/302-fake', fakeRedirectHandler(302));
 app.post('/307-fake', fakeRedirectHandler(307));
 app.post('/308-fake', fakeRedirectHandler(308));
 
+app.get('/gzip-error', (request, response) => {
+  response.setHeader('content-encoding', 'gzip');
+  response.end();
+});
+
 app.get('/iso-8859-1-charset-utf8', (req, res) => {
 	// res.set("Content-Type", "application/json; charset=utf-8");
 	res.send({
