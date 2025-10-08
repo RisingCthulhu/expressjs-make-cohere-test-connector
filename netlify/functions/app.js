@@ -56,9 +56,13 @@ app.get('/gzip-error', (request, response) => {
   response.end();
 });
 
-app.get('/gzip-no-error', (request, response) => {
-  response.setHeader('content-encoding', 'gzip');
-  response.setHeader('content-length', 0)
+app.get('/br-error', (request, response) => {
+  response.setHeader('content-encoding', 'br');
+  response.end();
+});
+
+app.get('/deflate-error', (request, response) => {
+  response.setHeader('content-encoding', 'deflate');
   response.end();
 });
 
