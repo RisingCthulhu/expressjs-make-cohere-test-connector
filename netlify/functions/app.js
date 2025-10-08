@@ -58,7 +58,7 @@ app.get('/gzip-error', (request, response) => {
 
 app.get('/gzip-no-data-204', (request, response) => {
   response.setHeader('content-encoding', 'gzip');
-  response.statusCode(204);
+  response.status(204);
   response.end();
 });
 
