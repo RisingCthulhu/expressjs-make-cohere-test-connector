@@ -56,6 +56,12 @@ app.get('/gzip-error', (request, response) => {
   response.end();
 });
 
+app.get('/gzip-no-data-204', (request, response) => {
+  response.setHeader('content-encoding', 'gzip');
+  response.statusCode(204);
+  response.end();
+});
+
 app.get('/iso-8859-1-charset-utf8', (req, res) => {
 	// res.set("Content-Type", "application/json; charset=utf-8");
 	res.send({
