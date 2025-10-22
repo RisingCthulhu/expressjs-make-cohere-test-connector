@@ -129,13 +129,13 @@ app.post('/mock-create-wh', async (req, res) => {
 		!whUrl.startsWith('http://') ||
 		!whUrl.startsWith('https://')
 	) {
-		res.status(400).send('URL address is not valid.');
+		res.status(400).send(`"${whUrl}": URL address is not valid.`);
 	}
 
 	try {
 		new URL(whUrl);
 	} catch (error) {
-		res.status(400).send('URL address is not valid.');
+		res.status(400).send(`"${whUrl}": "${error.message}".`);
 	}
 
 	const { status } = await fetch(whUrl, { method: 'head' });
