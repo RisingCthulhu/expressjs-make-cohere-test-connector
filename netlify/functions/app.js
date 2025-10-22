@@ -121,6 +121,7 @@ app.get('/api-key-auth-qs', apiKeyAuthHandler('qs'));
 app.get('/api-key-auth-header', apiKeyAuthHandler('header'));
 
 app.post('/mock-create-wh', async (req, res) => {
+	console.log('adding console log to see if it is present in the UI')
 	const { whUrl } = req.body;
 
 	if (!whUrl) {
