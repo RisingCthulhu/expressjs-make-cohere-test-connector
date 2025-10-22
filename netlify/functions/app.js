@@ -52,18 +52,18 @@ app.post('/307-fake', fakeRedirectHandler(307));
 app.post('/308-fake', fakeRedirectHandler(308));
 
 app.get('/gzip-error', (request, response) => {
-  response.setHeader('content-encoding', 'gzip');
-  response.end();
+	response.setHeader('content-encoding', 'gzip');
+	response.end();
 });
 
 app.get('/br-error', (request, response) => {
-  response.setHeader('content-encoding', 'br');
-  response.end();
+	response.setHeader('content-encoding', 'br');
+	response.end();
 });
 
 app.get('/deflate-error', (request, response) => {
-  response.setHeader('content-encoding', 'deflate');
-  response.end();
+	response.setHeader('content-encoding', 'deflate');
+	response.end();
 });
 
 app.get('/iso-8859-1-charset-utf8', (req, res) => {
@@ -86,13 +86,16 @@ app.get('/strict-validate-qs', (req, res) => {
 
 	const restKeys = Object.keys(rest);
 	if (restKeys.length !== 0) {
-		const unexpectedQsStr = restKeys.join(', ')
-		
-		res.status(400).send({ error: 'Unexpected query parameters', message: `Received unexpected query parameters: ${unexpectedQsStr}.` })
+		const unexpectedQsStr = restKeys.join(', ');
+
+		res.status(400).send({
+			error: 'Unexpected query parameters',
+			message: `Received unexpected query parameters: ${unexpectedQsStr}.`,
+		});
 	}
 
 	res.send({ bestAutomationPlatform, bestEngineeringTeam });
-})
+});
 
 const apiKeyAuthHandler = (placement) => (req, res) => {
 	const apiKey = 'test.API-key123';
@@ -116,6 +119,34 @@ const apiKeyAuthHandler = (placement) => (req, res) => {
 
 app.get('/api-key-auth-qs', apiKeyAuthHandler('qs'));
 app.get('/api-key-auth-header', apiKeyAuthHandler('header'));
+
+app.post('/mock-create-wh', async (req, res) => {
+	const { whUrl } = req.body;
+
+	if (
+		!whUrl ||
+		typeof whUrl !== 'string' ||
+		!whUrl.startsWith('http://') ||
+		!whUrl.startsWith('https://')
+	) {
+		res.status(400).send('URL address is not valid.');
+	}
+
+	try {
+		new URL(whUrl);
+	} catch (error) {
+		res.status(400).send('URL address is not valid.');
+	}
+
+	const { status } = await fetch(whUrl, { method: 'head' });
+
+	if (status !== 200) {
+		res.status(400).send(`WH is expected to respond with 200 statud code. Received status: ${status}.`);
+	}
+
+	res.status(200).send({ status: 'OK' })
+});
+
 
 app.use('/hello', helloRoute);
 app.use('/philosophers', philosophersRouter);
