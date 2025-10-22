@@ -123,13 +123,20 @@ app.get('/api-key-auth-header', apiKeyAuthHandler('header'));
 app.post('/mock-create-wh', async (req, res) => {
 	const { whUrl } = req.body;
 
-	if (
-		!whUrl ||
-		typeof whUrl !== 'string' ||
-		(!whUrl.startsWith('http://') &&
-		!whUrl.startsWith('https://'))
-	) {
-		res.status(400).send(`"${whUrl}": URL address is not valid.`);
+	if (!whUrl) {
+		res.status(400).send(`"${whUrl}": URL address is not valid. Empty.`);
+	}
+
+	if (typeof whUrl !== 'string') {
+		res.status(400).send(
+			`"${whUrl}": URL address is not valid. Not a string.`
+		);
+	}
+
+	if (!whUrl.startsWith('http://') && !whUrl.startsWith('https://')) {
+		res.status(400).send(
+			`"${whUrl}": URL address is not valid. Protocol is neither 'http' nor 'https'.`
+		);
 	}
 
 	try {
@@ -141,12 +148,13 @@ app.post('/mock-create-wh', async (req, res) => {
 	const { status } = await fetch(whUrl, { method: 'head' });
 
 	if (status !== 200) {
-		res.status(400).send(`WH is expected to respond with 200 statud code. Received status: ${status}.`);
+		res.status(400).send(
+			`WH is expected to respond with 200 statud code. Received status: ${status}.`
+		);
 	}
 
-	res.status(200).send({ status: 'OK' })
+	res.status(200).send({ status: 'OK' });
 });
-
 
 app.use('/hello', helloRoute);
 app.use('/philosophers', philosophersRouter);
