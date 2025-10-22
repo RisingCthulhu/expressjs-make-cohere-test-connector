@@ -124,17 +124,17 @@ app.post('/mock-create-wh', async (req, res) => {
 	const { whUrl } = req.body;
 
 	if (!whUrl) {
-		res.status(400).send(`"${whUrl}": URL address is not valid. Empty.`);
+		return res.status(400).send(`"${whUrl}": URL address is not valid. Empty.`);
 	}
 
 	if (typeof whUrl !== 'string') {
-		res.status(400).send(
+		return res.status(400).send(
 			`"${whUrl}": URL address is not valid. Not a string.`
 		);
 	}
 
 	if (!whUrl.startsWith('http://') && !whUrl.startsWith('https://')) {
-		res.status(400).send(
+		return res.status(400).send(
 			`"${whUrl}": URL address is not valid. Protocol is neither 'http' nor 'https'.`
 		);
 	}
@@ -142,13 +142,13 @@ app.post('/mock-create-wh', async (req, res) => {
 	try {
 		new URL(whUrl);
 	} catch (error) {
-		res.status(400).send(`"${whUrl}": "${error.message}".`);
+		return res.status(400).send(`"${whUrl}": "${error.message}".`);
 	}
 
 	const { status } = await fetch(whUrl, { method: 'head' });
 
 	if (status !== 200) {
-		res.status(400).send(
+		return res.status(400).send(
 			`WH is expected to respond with 200 statud code. Received status: ${status}.`
 		);
 	}
