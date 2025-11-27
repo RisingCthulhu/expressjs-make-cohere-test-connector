@@ -39,11 +39,11 @@ routes.get('/search', (req, res) => {
     const intRegExp = /^[0-9]+$/;
 
     if (!isEmpty(offset) && !intRegExp.test(offset)) {
-        res.status(400).send({ message: 'Offset should be a positive integer.' })
+        res.status(400).send({ message: 'Offset should be a non-negative integer.' })
     }
 
     if (!isEmpty(limit) && !intRegExp.test(limit ?? 5)) {
-        res.status(400).send({ message: 'Limit should be a positive integer.' })
+        res.status(400).send({ message: 'Limit should be a non-negative integer.' })
     }
 
     if (!isNaN(parseInt(offset))) {
