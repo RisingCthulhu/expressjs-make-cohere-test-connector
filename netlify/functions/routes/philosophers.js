@@ -30,7 +30,33 @@ const philosophers = [
     },
 ];
 
+const isEmpty = value => {
+    return value === null || value === undefined;
+}
+
 routes.get('/search', (req, res) => {
+    const { offset, limit } = req.query;
+    const intRegExp = /^[0-9]+$/;
+
+    if (!isEmpty(offset) && !intRegExp.test(offset)) {
+        res.status(400).send({ message: 'Offset should be an integer.' })
+    }
+
+    if (!isEmpty(limit) && !intRegExp.test(limit ?? 5)) {
+        res.status(400).send({ message: 'Limit should be an integer.' })
+    }
+
+    if (!isNaN(parseInt(offset))) {
+        const startIdx = parseInt(offset);
+        let endIdx = limit ? startIdx + parseInt(limit) : startIdx + 5;
+        endIdx = endIdx > philosophers.length ? undefined : endIdx;
+        const results = philosophers.slice(startIdx, endIdx)
+
+        res.send({
+            results,
+        });
+    }
+
     res.send({
         results: philosophers,
     });
