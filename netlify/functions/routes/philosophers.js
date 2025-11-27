@@ -58,7 +58,7 @@ routes.get('/search', (req, res) => {
     }
 
     res.send({
-        results: limit ? philosophers.slice(null, limit + 1) : philosophers,
+        results: limit ? philosophers.slice(null, limit) : philosophers,
     });
 });
 
