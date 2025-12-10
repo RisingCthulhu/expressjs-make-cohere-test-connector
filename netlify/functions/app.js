@@ -51,6 +51,12 @@ app.post('/302-fake', fakeRedirectHandler(302));
 app.post('/307-fake', fakeRedirectHandler(307));
 app.post('/308-fake', fakeRedirectHandler(308));
 
+app.all('/redirect-to-elastic/mcp', (req, res) => {
+	const targetUrl = 'http://elasticsearch:9200/';
+
+	res.redirect(302, targetUrl);
+});
+
 app.get('/gzip-error', (request, response) => {
 	response.setHeader('content-encoding', 'gzip');
 	response.end();
