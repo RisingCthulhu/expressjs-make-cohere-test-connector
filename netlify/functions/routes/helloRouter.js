@@ -28,12 +28,12 @@ routes.get("/values", async (req, res) => {
 
 
 routes.all("/greet", async (req, res) => {
-  if (Date.now() - prevRequestTimestamp < 10000) {
-    res.status(429).send({
-      error: 'Rate limit exceeded.'
-    });
-    return;
-  }
+  // if (Date.now() - prevRequestTimestamp < 10000) {
+  //   res.status(429).send({
+  //     error: 'Rate limit exceeded.'
+  //   });
+  //   return;
+  // }
   
   res.status(200).send({
     greeting: 'Greetings!'
