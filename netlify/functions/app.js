@@ -57,6 +57,12 @@ app.all('/redirect-to-elastic/mcp', (req, res) => {
 	res.redirect(302, targetUrl);
 });
 
+app.all('/redirect-to-postman/mcp', (req, res) => {
+	const targetUrl = 'https://mcp.postman.com/minimal';
+
+	res.redirect(302, targetUrl);
+});
+
 app.get('/gzip-error', (request, response) => {
 	response.setHeader('content-encoding', 'gzip');
 	response.end();
