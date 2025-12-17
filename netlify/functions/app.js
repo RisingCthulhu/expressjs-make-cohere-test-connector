@@ -38,7 +38,7 @@ const redirectHandler = (status) => (req, res) => {
 	res.redirect(status, redirectUrl);
 };
 
-for (let code = 300; code <= 308; code++) {
+for (let code = 300; code <= 308; c++) {
 	app.all(`/${code}`, redirectHandler(code));
 }
 
@@ -52,7 +52,7 @@ app.post('/307-fake', fakeRedirectHandler(307));
 app.post('/308-fake', fakeRedirectHandler(308));
 
 app.all('/redirect-to-elastic/mcp', (req, res) => {
-	const targetUrl = 'https://mcp.make.com/sse';
+	const targetUrl = 'http://elasticsearch:9200/';
 
 	res.redirect(302, targetUrl);
 });
