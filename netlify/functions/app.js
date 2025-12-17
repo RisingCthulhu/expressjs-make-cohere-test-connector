@@ -52,7 +52,7 @@ app.post('/307-fake', fakeRedirectHandler(307));
 app.post('/308-fake', fakeRedirectHandler(308));
 
 app.all('/redirect-to-elastic/mcp', (req, res) => {
-	const targetUrl = 'http://elasticsearch:9200/';
+	const targetUrl = 'https://mcp.make.com/sse';
 
 	res.redirect(302, targetUrl);
 });
