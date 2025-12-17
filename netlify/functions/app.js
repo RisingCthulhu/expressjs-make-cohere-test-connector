@@ -38,7 +38,7 @@ const redirectHandler = (status) => (req, res) => {
 	res.redirect(status, redirectUrl);
 };
 
-for (let code = 300; code <= 308; c++) {
+for (let code = 300; code <= 308; code++) {
 	app.all(`/${code}`, redirectHandler(code));
 }
 
