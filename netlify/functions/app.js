@@ -63,6 +63,24 @@ app.all('/redirect-to-postman/mcp', (req, res) => {
 	res.redirect(302, targetUrl);
 });
 
+app.all('/redirect-to-wh/mcp', (req, res) => {
+	const targetUrl = 'https://webhook.site/c50fe1bb-007d-4c28-933a-130ee3ee2125';
+
+	res.redirect(302, targetUrl);
+});
+
+app.all('/redirect-to-self/mcp', (req, res) => {
+	const targetUrl = 'https://test-expressjs-proj.netlify.app/self-redirected-txt-event-stream';
+
+	res.redirect(302, targetUrl);
+});
+
+app.all('/self-redirected-txt-event-stream', (req, res) => {
+	res.header('Content-Type', 'text/event-stream');
+	res.send('data: Hello, world!\n\n');
+	res.end();
+});
+
 app.get('/gzip-error', (request, response) => {
 	response.setHeader('content-encoding', 'gzip');
 	response.end();
