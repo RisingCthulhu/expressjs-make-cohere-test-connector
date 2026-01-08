@@ -69,6 +69,44 @@ app.all('/redirect-to-wh/mcp', (req, res) => {
 	res.redirect(302, targetUrl);
 });
 
+app.all('/redirect-loop-to-wh/:count', (req, res) => {
+	const targetUrl = 'https://webhook.site/c50fe1bb-007d-4c28-933a-130ee3ee2125';
+	const count = parseInt(req.params.count, 10);
+
+	if (isNaN(count) || count < 0) {
+		return res.status(400).send({ error: 'Invalid count parameter. Must be a non-negative integer.' });
+	}
+
+	if (count === 0) {
+		// Final redirect to targetUrl
+		return res.redirect(302, targetUrl);
+	}
+
+	// Redirect to the next iteration (count - 1)
+	const baseUrl = req.protocol + '://' + req.get('host');
+	const nextUrl = `${baseUrl}/redirect-loop/${count - 1}`;
+	res.redirect(302, nextUrl);
+});
+
+app.all('/redirect-loop-to-elastic/:count', (req, res) => {
+	const targetUrl = 'http://elasticsearch:9200/';
+	const count = parseInt(req.params.count, 10);
+
+	if (isNaN(count) || count < 0) {
+		return res.status(400).send({ error: 'Invalid count parameter. Must be a non-negative integer.' });
+	}
+
+	if (count === 0) {
+		// Final redirect to targetUrl
+		return res.redirect(302, targetUrl);
+	}
+
+	// Redirect to the next iteration (count - 1)
+	const baseUrl = req.protocol + '://' + req.get('host');
+	const nextUrl = `${baseUrl}/redirect-loop/${count - 1}`;
+	res.redirect(302, nextUrl);
+});
+
 app.all('/redirect-to-self/mcp', (req, res) => {
 	const targetUrl = 'https://test-expressjs-proj.netlify.app/self-redirected-txt-event-stream';
 
