@@ -84,7 +84,7 @@ app.all('/redirect-loop-to-wh/:count', (req, res) => {
 
 	// Redirect to the next iteration (count - 1)
 	const baseUrl = req.protocol + '://' + req.get('host');
-	const nextUrl = `${baseUrl}/redirect-loop/${count - 1}`;
+	const nextUrl = `${baseUrl}/redirect-loop-to-wh/${count - 1}`;
 	res.redirect(302, nextUrl);
 });
 
@@ -103,7 +103,7 @@ app.all('/redirect-loop-to-elastic/:count', (req, res) => {
 
 	// Redirect to the next iteration (count - 1)
 	const baseUrl = req.protocol + '://' + req.get('host');
-	const nextUrl = `${baseUrl}/redirect-loop/${count - 1}`;
+	const nextUrl = `${baseUrl}/redirect-loop-to-elastic/${count - 1}`;
 	res.redirect(302, nextUrl);
 });
 
