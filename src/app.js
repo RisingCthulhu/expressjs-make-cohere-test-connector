@@ -31,6 +31,22 @@ app.use('/hello', helloRoute);
 app.use('/philosophers', philosophersRouter);
 app.use('/gCalendarMock', gCalendarMockRouter);
 
+app.all('/api/v2/users/me', (req, res) => {
+  console.log('body', req.body);
+  console.log('headers', req.headers);
+  console.log('query', req.query);
+  console.log('params', req.params);
+  console.log('path', req.path);
+  console.log('method', req.method);
+  console.log('url', req.url);
+  console.log('protocol', req.protocol);
+  console.log('hostname', req.hostname);
+  console.log('ip', req.ip);
+  console.log('originalUrl', req.originalUrl);
+  console.log('--------------------------------');
+  res.status(200).send({ status: 'ok' });
+});
+
 // custom middleware
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);
