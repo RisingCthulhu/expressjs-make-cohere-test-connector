@@ -30,36 +30,38 @@ const philosophers = [
     },
 ];
 
+const DEFAULT_LIMIT = 5;
+const INT_REGEX = /^[0-9]+$/;
+
 const isEmpty = value => {
     return value === null || value === undefined;
 }
 
 routes.get('/search', (req, res) => {
-    const { offset, limit } = req.query;
-    const intRegExp = /^[0-9]+$/;
+    const { offset: rawOffset, limit: rawLimit } = req.query;
 
-    if (!isEmpty(offset) && !intRegExp.test(offset)) {
-        res.status(400).send({ message: 'Offset should be a non-negative integer.' })
+    if (!isEmpty(rawOffset) && !INT_REGEX.test(rawOffset)) {
+        return res.status(400).send({ message: 'Offset should be a non-negative integer.' });
+    }
+    if (!isEmpty(rawLimit) && !INT_REGEX.test(rawLimit)) {
+        return res.status(400).send({ message: 'Limit should be a non-negative integer.' });
     }
 
-    if (!isEmpty(limit) && !intRegExp.test(limit ?? 5)) {
-        res.status(400).send({ message: 'Limit should be a non-negative integer.' })
-    }
+    const offset = !isEmpty(rawOffset) ? parseInt(rawOffset, 10) : 0;
+    const limit = !isEmpty(rawLimit) ? parseInt(rawLimit, 10) : DEFAULT_LIMIT;
 
-    if (!isNaN(parseInt(offset))) {
-        const startIdx = parseInt(offset);
-        let endIdx = limit ? startIdx + parseInt(limit) : startIdx + 5;
-        endIdx = endIdx > philosophers.length ? undefined : endIdx;
-        const results = philosophers.slice(startIdx, endIdx)
+    const results = philosophers.slice(offset, offset + limit);
 
-        res.send({
-            results,
+    let next = null;
+    if (limit > 0 && offset + limit < philosophers.length) {
+        const params = new URLSearchParams({
+            offset: String(offset + limit),
+            limit: String(limit),
         });
+        next = `${req.baseUrl}${req.path}?${params.toString()}`;
     }
 
-    res.send({
-        results: limit ? philosophers.slice(null, limit) : philosophers,
-    });
+    res.send({ results, next });
 });
 
 export default routes;
