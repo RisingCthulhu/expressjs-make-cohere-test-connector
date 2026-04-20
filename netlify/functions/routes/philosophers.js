@@ -30,7 +30,7 @@ const philosophers = [
     },
 ];
 
-const DEFAULT_LIMIT = 5;
+const DEFAULT_LIMIT = 2;
 const INT_REGEX = /^[0-9]+$/;
 
 const isEmpty = value => {
